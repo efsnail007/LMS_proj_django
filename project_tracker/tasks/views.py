@@ -1,6 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.views import View
+from django.views.generic import DetailView, ListView
+
 from .models import Project, Task
 
 
@@ -37,17 +40,11 @@ def task_detail(request, project_id, task_id):
     return HttpResponse(response_html)
 
 
-from django.views import View
-
-
 class IndexView(View):
     def get(self, request, *args, **kwargs):
         projects_list_url = reverse("tasks:projects_list")
         html = f"<h1>Страница приложения tasks</h1><a href='{projects_list_url}'>Список проектов</a>"
         return HttpResponse(html)
-
-
-from django.views.generic import ListView
 
 
 class ProjectsListView(ListView):
@@ -60,9 +57,6 @@ class ProjectsListView(ListView):
             projects_html += f'<li><a href="{project.id}/">{project.name}</a></li>'
         projects_html += "</ul>"
         return HttpResponse(projects_html)
-
-
-from django.views.generic import DetailView
 
 
 class ProjectDetailView(DetailView):
@@ -83,12 +77,9 @@ class ProjectDetailView(DetailView):
 
 class TaskDetailView(DetailView):
     model = Task
-    pk_url_kwarg = 'task_id'
+    pk_url_kwarg = "task_id"
 
     def get(self, request, *args, **kwargs):
         task = self.get_object()
-        response_html = f'<h1>{task.name}</h1><p>{task.description}</p>'
+        response_html = f"<h1>{task.name}</h1><p>{task.description}</p>"
         return HttpResponse(response_html)
-
-
-
