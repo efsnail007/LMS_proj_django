@@ -28,6 +28,44 @@ def create_project(request):
     return render(request, "tasks/project_create.html", {"form": form})
 
 
+def update_project(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    if request.method == "POST":
+        form = ProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return redirect("tasks:project_detail", project_id=project.id)
+    else:
+        form = ProjectForm(instance=project)
+    return render(
+        request, "tasks/project_update.html", {"form": form, "project": project}
+    )
+
+
+def update_task(request, project_id, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    if request.method == "POST":
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect("tasks:task_detail", project_id=project_id, task_id=task.id)
+    else:
+        form = TaskForm(instance=task)
+    return render(request, "tasks/task_update.html", {"form": form, "task": task})
+
+
+def delete_project(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    project.delete()
+    return redirect("tasks:projects_list")
+
+
+def delete_task(request, project_id, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    task.delete()
+    return redirect("tasks:project_detail", project_id=project_id)
+
+
 def add_task_to_project(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     if request.method == "POST":
