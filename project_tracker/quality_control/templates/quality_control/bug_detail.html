@@ -2,5 +2,8 @@
 
 {% block content %}
 <h1>Детали бага {{ bug.id }}</h1>
+<p>{{ bug.title }}</p>
 <p>{{ bug.description }}</p>
+<p>Status - {{ bug.status }}</p>
+<p>Priority - {{ bug.priority }}</p>
 {% endblock %}
