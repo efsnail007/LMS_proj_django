@@ -3,4 +3,6 @@
 {% block content %}
 <h1>Страница приложения tasks</h1>
 <a href="{% url 'tasks:projects_list' %}">Список проектов</a>
+<br>
+<a href="{% url 'quality_control:index' %}">Главная страница системы контроля качества</a>
 {% endblock %}
