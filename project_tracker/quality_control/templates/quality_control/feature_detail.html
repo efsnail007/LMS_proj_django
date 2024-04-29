@@ -6,4 +6,9 @@
 <p>{{ feature.description }}</p>
 <p>Status - {{ feature.status }}</p>
 <p>Priority - {{ feature.priority }}</p>
+
+<p><a href="{% url 'quality_control:update_feature' feature.id %}">Изменить запрос на улучшение</a></p>
+
+<p><a href="{% url 'quality_control:delete_feature' feature.id %}"
+      onclick="return confirm('Вы уверены, что хотите удалить этот проект?');">Удалить запрос на улучшение</a></p>
 {% endblock %}
